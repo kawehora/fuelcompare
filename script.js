@@ -97,7 +97,14 @@ function App() {
   return h('div', { className: 'app' },
 
     // Cabeçalho
-    h('p', { className: 'eyebrow' }, 'Posto de combustível'),
+    h('div', { className: 'brand-header' },
+      h('img', {
+        className: 'brand-logo',
+        src: 'scripts/logo.png',
+        alt: 'Logo do site'
+      })
+    ),
+    h('h2', { className: 'brand-subtitle' }, 'Álcool x Gasolina'),
     h('h1', null, 'Álcool ou gasolina: o que vale mais no seu tanque?'),
 
     // Card com os campos de preço

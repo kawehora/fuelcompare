@@ -69,6 +69,20 @@ body {
   justify-content: center;
 }
 
+.brand-header {
+  display: flex;
+  justify-content: center;
+  margin: 42px 0 0;
+}
+
+.brand-logo {
+  display: block;
+  width: 360px;
+  height: auto;
+  border-radius: 18px;
+  filter: drop-shadow(0 8px 18px rgba(201, 122, 46, 0.18));
+}
+
 /* Container principal do app, centralizado e com largura máxima
    pensada para celulares */
 .app {
@@ -88,10 +102,21 @@ body {
 
 h1 {
   font-family: 'Space Grotesk', sans-serif;
-  font-size: 28px;
-  line-height: 1.15;
+  font-size: 20px;
+  line-height: 1.2;
   margin: 0 0 24px;
   letter-spacing: -0.01em;
+}
+
+.brand-subtitle {
+  margin: 0;
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--gasolina);
+  text-align: center;
+  line-height: 1;
 }
 
 /* =========================================================
