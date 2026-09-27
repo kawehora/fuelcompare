@@ -59,6 +59,17 @@ function CampoPreco({ tipo, rotulo, valor, aoAlterar }) {
 function App() {
   const [precoAlcool, setPrecoAlcool] = useState('');
   const [precoGasolina, setPrecoGasolina] = useState('');
+  const [resultadoAberto, setResultadoAberto] = useState(false);
+
+  const atualizarPrecoAlcool = (valor) => {
+    setPrecoAlcool(valor);
+    setResultadoAberto(valor.length >= precoAlcool.length);
+  };
+
+  const atualizarPrecoGasolina = (valor) => {
+    setPrecoGasolina(valor);
+    setResultadoAberto(valor.length >= precoGasolina.length);
+  };
 
   // Recalcula o resultado sempre que os preços mudam
   const resultado = useMemo(() => {
@@ -73,6 +84,7 @@ function App() {
     const custoEtanolKm = pa / FATOR_ETANOL;
     const custoGasolinaKm = pg;
     const maiorCusto = Math.max(custoEtanolKm, custoGasolinaKm);
+    const economiaEstimad = Math.abs(custoEtanolKm - custoGasolinaKm) * 50;
 
     // Quanto se economiza, em %, escolhendo o combustível vencedor
     const economiaPercentual = compensaEtanol
@@ -84,11 +96,14 @@ function App() {
       compensaEtanol,
       custoEtanolKm,
       custoGasolinaKm,
+      economiaEstimad,
       percentualBarraEtanol: (custoEtanolKm / maiorCusto) * 100,
       percentualBarraGasolina: (custoGasolinaKm / maiorCusto) * 100,
       economiaPercentual
     };
   }, [precoAlcool, precoGasolina]);
+
+  const melhorEscolha = resultado ? (resultado.compensaEtanol ? 'ALCOOL' : 'GASOLINA') : '';
 
   const corDestaque = resultado
     ? (resultado.compensaEtanol ? 'var(--etanol)' : 'var(--gasolina)')
@@ -114,16 +129,30 @@ function App() {
           tipo: 'et',
           rotulo: 'Etanol (litro)',
           valor: precoAlcool,
-          aoAlterar: setPrecoAlcool
+          aoAlterar: atualizarPrecoAlcool
         }),
         h(CampoPreco, {
           tipo: 'ga',
           rotulo: 'Gasolina (litro)',
           valor: precoGasolina,
-          aoAlterar: setPrecoGasolina
+          aoAlterar: atualizarPrecoGasolina
         })
       )
     ),
+
+    resultado && resultadoAberto
+      ? h('div', { className: 'result-banner', role: 'status', 'aria-live': 'polite' },
+          h('button', {
+            type: 'button',
+            className: 'result-close',
+            onClick: () => setResultadoAberto(false),
+            'aria-label': 'Fechar melhor escolha'
+          }, '×'),
+          h('div', { className: 'result-banner__label' }, '🏆 MELHOR ESCOLHA'),
+          h('div', { className: 'result-banner__fuel' }, melhorEscolha),
+          h('div', { className: 'result-banner__economy' }, 'Economia estimada (50 L equivalentes): R$ ' + formatBRL(resultado.economiaEstimad))
+        )
+      : null,
 
     // Resultado + gráfico (só aparece quando os dois preços foram informados)
     resultado

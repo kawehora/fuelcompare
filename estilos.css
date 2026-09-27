@@ -198,6 +198,84 @@ input[type=text]:focus-visible {
   padding: 22px 20px;
 }
 
+.result-banner {
+  position: fixed;
+  z-index: 1000;
+  right: max(16px, env(safe-area-inset-right));
+  bottom: max(16px, env(safe-area-inset-bottom));
+  width: min(380px, calc(100vw - 32px));
+  background: #247a49;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 12px;
+  padding: 20px 48px 18px 20px;
+  color: #fff;
+  box-shadow: 0 12px 32px rgba(11, 54, 30, 0.3);
+  animation: toast-enter 220ms ease-out both;
+}
+
+.result-close {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border: none;
+  background: transparent;
+  color: #fff;
+  font-size: 28px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0;
+  opacity: 0.88;
+}
+
+.result-close:hover,
+.result-close:focus-visible {
+  opacity: 1;
+}
+
+.result-close:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: -4px;
+  border-radius: 50%;
+}
+
+.result-banner__label {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.88);
+  margin: 0 24px 8px 0;
+}
+
+.result-banner__fuel {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.1;
+  color: #fff;
+  margin: 0 0 8px;
+}
+
+.result-banner__economy {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.94);
+  font-weight: 600;
+  margin: 0;
+}
+
+@keyframes toast-enter {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .result-banner { animation: none; }
+}
+
 .verdict-label {
   font-size: 13px;
   color: var(--text-dim);
@@ -284,4 +362,57 @@ input[type=text]:focus-visible {
   color: var(--text-dim);
   text-align: center;
   padding: 8px 0 4px;
+}
+
+@media (max-width: 520px) {
+  .app {
+    padding: 16px 16px 140px;
+  }
+
+  .brand-header {
+    margin-top: 22px;
+  }
+
+  .brand-logo {
+    width: min(100%, 320px);
+  }
+
+  .brand-subtitle {
+    font-size: 27px;
+  }
+
+  h1 {
+    font-size: 18px;
+    margin-bottom: 18px;
+  }
+
+  .card {
+    padding: 16px;
+  }
+
+  .field-row {
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .field { margin-bottom: 0; }
+
+  .result-banner {
+    right: max(12px, env(safe-area-inset-right));
+    bottom: max(12px, env(safe-area-inset-bottom));
+    left: max(12px, env(safe-area-inset-left));
+    width: auto;
+    max-width: 380px;
+    margin-left: auto;
+    padding: 16px 48px 15px 16px;
+  }
+
+  .result-banner__fuel {
+    font-size: 25px;
+  }
+
+  .result-banner__economy {
+    font-size: 13px;
+    line-height: 1.4;
+  }
 }
