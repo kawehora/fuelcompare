@@ -1,0 +1,262 @@
+/* =========================================================
+   VARIÁVEIS DE COR (TEMA CLARO / ESCURO)
+   ========================================================= */
+:root {
+  --bg: #EEF1EF;              /* fundo da página */
+  --surface: #FFFFFF;         /* fundo dos cards */
+  --border: #DDE2DF;          /* bordas */
+  --text: #16201A;            /* texto principal */
+  --text-dim: #5B6862;        /* texto secundário */
+  --etanol: #3F8B5C;          /* cor do etanol */
+  --etanol-soft: #E6F2E9;
+  --gasolina: #C97A2E;        /* cor da gasolina */
+  --gasolina-soft: #F8ECDD;
+  --needle: #16201A;
+
+  box-sizing: border-box;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* Tema escuro automático, conforme preferência do sistema */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #121613;
+    --surface: #1A201C;
+    --border: #2B322D;
+    --text: #ECF1EE;
+    --text-dim: #8FA098;
+    --etanol: #6FBE8B;
+    --etanol-soft: #1E2B22;
+    --gasolina: #E0A360;
+    --gasolina-soft: #2E241A;
+    --needle: #ECF1EE;
+  }
+}
+
+/* Permite forçar o tema escuro manualmente, se desejar */
+:root[data-theme="dark"] {
+  --bg: #121613;
+  --surface: #1A201C;
+  --border: #2B322D;
+  --text: #ECF1EE;
+  --text-dim: #8FA098;
+  --etanol: #6FBE8B;
+  --etanol-soft: #1E2B22;
+  --gasolina: #E0A360;
+  --gasolina-soft: #2E241A;
+  --needle: #ECF1EE;
+}
+
+/* =========================================================
+   BASE
+   ========================================================= */
+html { scroll-padding-top: env(safe-area-inset-top, 0px); }
+html, body { height: 100%; }
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+#root {
+  min-height: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+/* Container principal do app, centralizado e com largura máxima
+   pensada para celulares */
+.app {
+  width: 100%;
+  max-width: 440px;
+  padding: 28px 20px 40px;
+}
+
+/* =========================================================
+   TÍTULO
+   ========================================================= */
+.eyebrow {
+  font-size: 13px;
+  color: var(--text-dim);
+  margin: 0 0 2px;
+}
+
+h1 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 28px;
+  line-height: 1.15;
+  margin: 0 0 24px;
+  letter-spacing: -0.01em;
+}
+
+/* =========================================================
+   CARDS
+   ========================================================= */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 20px;
+  margin-bottom: 16px;
+}
+
+/* =========================================================
+   CAMPOS DE ENTRADA (PREÇOS)
+   ========================================================= */
+.field { margin-bottom: 14px; }
+.field:last-child { margin-bottom: 0; }
+
+.field-row {
+  display: flex;
+  gap: 12px;
+}
+.field-row .field { flex: 1; }
+
+label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--text-dim);
+  margin-bottom: 6px;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.dot.et { background: var(--etanol); }
+.dot.ga { background: var(--gasolina); }
+
+.input-wrap {
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: var(--bg);
+  padding: 0 10px;
+}
+.input-wrap span {
+  color: var(--text-dim);
+  font-size: 15px;
+}
+
+input[type=text] {
+  width: 100%;
+  border: none;
+  background: transparent;
+  outline: none;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 18px;
+  color: var(--text);
+  padding: 11px 6px;
+}
+input[type=text]:focus-visible {
+  outline: 2px solid var(--needle);
+  outline-offset: -2px;
+  border-radius: 3px;
+}
+
+/* =========================================================
+   CARD DE RESULTADO (VEREDITO)
+   ========================================================= */
+.verdict-card {
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--accent, var(--etanol));
+  padding: 22px 20px;
+}
+
+.verdict-label {
+  font-size: 13px;
+  color: var(--text-dim);
+  margin: 0 0 4px;
+}
+
+.verdict-fuel {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 26px;
+  font-weight: 600;
+  margin: 0 0 8px;
+  color: var(--accent, var(--etanol));
+}
+
+.verdict-detail {
+  font-size: 14px;
+  color: var(--text-dim);
+  line-height: 1.5;
+  margin: 0;
+}
+.verdict-detail b {
+  color: var(--text);
+  font-weight: 600;
+}
+
+/* =========================================================
+   GRÁFICO COMPARATIVO (BARRAS)
+   ========================================================= */
+.chart-title {
+  font-size: 13px;
+  color: var(--text-dim);
+  margin: 0 0 16px;
+}
+
+.bar-row { margin-bottom: 16px; }
+.bar-row:last-child { margin-bottom: 0; }
+
+.bar-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 6px;
+  font-size: 14px;
+}
+.bar-head .name {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 500;
+}
+.bar-head .val {
+  font-family: 'Space Grotesk', sans-serif;
+  color: var(--text-dim);
+}
+
+.bar-track {
+  height: 10px;
+  background: var(--bg);
+  border-radius: 2px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+
+.bar-fill {
+  height: 100%;
+  border-radius: 1px;
+  transition: width 0.5s cubic-bezier(.2,.8,.2,1);
+}
+.bar-fill.et { background: var(--etanol); }
+.bar-fill.ga { background: var(--gasolina); }
+
+/* =========================================================
+   TEXTOS AUXILIARES
+   ========================================================= */
+.foot-note {
+  font-size: 12px;
+  color: var(--text-dim);
+  line-height: 1.5;
+  margin: 18px 2px 0;
+}
+
+.empty-hint {
+  font-size: 14px;
+  color: var(--text-dim);
+  text-align: center;
+  padding: 8px 0 4px;
+}
