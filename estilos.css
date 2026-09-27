@@ -168,6 +168,9 @@ label {
   background: var(--bg);
   padding: 0 10px;
 }
+.input-wrap:focus-within {
+  border-color: var(--etanol);
+}
 .input-wrap span {
   color: var(--text-dim);
   font-size: 15px;
@@ -182,11 +185,6 @@ input[type=text] {
   font-size: 18px;
   color: var(--text);
   padding: 11px 6px;
-}
-input[type=text]:focus-visible {
-  outline: 2px solid var(--needle);
-  outline-offset: -2px;
-  border-radius: 3px;
 }
 
 /* =========================================================
