@@ -355,6 +355,16 @@ input[type=text] {
   margin: 18px 2px 0;
 }
 
+.creator-credit {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text);
+  text-align: center;
+  opacity: 0.75;
+  margin: -14px 0 18px;
+}
+
 .empty-hint {
   font-size: 14px;
   color: var(--text-dim);

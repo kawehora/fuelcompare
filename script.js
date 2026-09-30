@@ -3,7 +3,7 @@
    Interface em React / Lógica em JavaScript
    ========================================================= */
 
-const { useState, useMemo } = React;
+const { useState, useMemo, useEffect } = React;
 const h = React.createElement;
 
 // Regra prática: o etanol rende, em média, 70% da autonomia da gasolina.
@@ -104,12 +104,37 @@ function App() {
   }, [precoAlcool, precoGasolina]);
 
   const melhorEscolha = resultado ? (resultado.compensaEtanol ? 'ALCOOL' : 'GASOLINA') : '';
+  const bannerVisivel = Boolean(resultado && resultadoAberto);
+
+  useEffect(() => {
+    if (!bannerVisivel) return;
+
+    const AudioContext = window.AudioContext || window.webkitAudioContext;
+    if (!AudioContext) return;
+
+    const contexto = new AudioContext();
+    const oscilador = contexto.createOscillator();
+    const volume = contexto.createGain();
+    const instante = contexto.currentTime;
+
+    oscilador.type = 'sine';
+    oscilador.frequency.setValueAtTime(880, instante);
+    volume.gain.setValueAtTime(0.0001, instante);
+    volume.gain.exponentialRampToValueAtTime(0.12, instante + 0.02);
+    volume.gain.exponentialRampToValueAtTime(0.0001, instante + 0.18);
+    oscilador.connect(volume);
+    volume.connect(contexto.destination);
+    oscilador.start(instante);
+    oscilador.stop(instante + 0.18);
+    oscilador.onended = () => contexto.close();
+  }, [bannerVisivel]);
 
   const corDestaque = resultado
     ? (resultado.compensaEtanol ? 'var(--etanol)' : 'var(--gasolina)')
     : 'var(--etanol)';
 
   return h('div', { className: 'app' },
+    h('p', { className: 'creator-credit' }, 'Kawê Dev 2026'),
 
     // Cabeçalho
     h('div', { className: 'brand-header' },
